@@ -140,8 +140,8 @@
 
 ### 核心贡献者
 - [陈思州-项目负责人](https://github.com/jjyaoao) (Datawhale 成员, 全文写作和校对)
-- [孙韬-项目负责人](https://github.com/fengju0213) (Datawhale 成员, 第九章内容和校对)  
-- [姜舒凡-项目负责人](https://github.com/Tsumugii24)（Datawhale 成员, 章节习题设计和校对）
+- [孙韬-联合发起者](https://github.com/fengju0213) (Datawhale 成员, 第九章内容和校对)  
+- [姜舒凡-联合发起者](https://github.com/Tsumugii24)（Datawhale 成员, 章节习题设计和校对）
 - [黄佩林-Datawhale意向成员](https://github.com/HeteroCat) (Agent 开发工程师, 第五章内容贡献者)
 - [曾鑫民-Agent工程师](https://github.com/fancyboi999) (牛客科技, 第十四章案例开发)
 - [朱信忠-指导专家](https://xinzhongzhu.github.io/) (Datawhale首席科学家-浙江师范大学杭州人工智能研究院教授)

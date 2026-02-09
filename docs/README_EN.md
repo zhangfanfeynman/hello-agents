@@ -125,8 +125,8 @@ We are an open-source community and welcome any form of contribution!
 
 ### Core Contributors
 - [Chen Sizhou - Project Leader](https://github.com/jjyaoao) (Datawhale member, full text writing and proofreading)
-- [Sun Tao - Project Leader](https://github.com/fengju0213) (Datawhale member, Chapter 9 content and proofreading)
-- [Jiang Shufan - Project Leader](https://github.com/Tsumugii24) (Datawhale member, chapter exercise design and proofreading)
+- [Sun Tao - Co-sponsor](https://github.com/fengju0213) (Datawhale member, Chapter 9 content and proofreading)
+- [Jiang Shufan - Co-sponsor](https://github.com/Tsumugii24) (Datawhale member, chapter exercise design and proofreading)
 - [Huang Peilin - Datawhale Prospective Member](https://github.com/HeteroCat) (Agent Development Engineer, Chapter 5 content contributor)
 - [Zeng Xinmin - Agent Engineer](https://github.com/fancyboi999) (Niuke Technology, Chapter 14 case development)
 - [Zhu Xinzhong - Advisory Expert](https://xinzhongzhu.github.io/) (Chief Scientist of Datawhale, Professor at Hangzhou Institute of Artificial Intelligence, Zhejiang Normal University)
