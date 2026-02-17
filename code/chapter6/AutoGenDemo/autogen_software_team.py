@@ -4,6 +4,8 @@ AutoGen 软件开发团队协作案例
 
 import os
 import asyncio
+import re
+import ast
 from typing import List, Dict, Any
 from dotenv import load_dotenv
 
@@ -19,10 +21,36 @@ from autogen_agentchat.ui import Console
 
 def create_openai_model_client():
     """创建 OpenAI 模型客户端用于测试"""
+    model_id = os.getenv("LLM_MODEL_ID", "gpt-4o")
+    
+    # 为非 OpenAI 模型提供 model_info
+    model_info = {
+        "vision": False,
+        "function_calling": True,
+        "json_output": True,
+        "family": "unknown"
+    }
+    
+    # model_client = OpenAIChatCompletionClient(
+    #     model="deepseek-chat",
+    #     api_key=os.getenv("DEEPSEEK_API_KEY"),
+    #     base_url="https://api.deepseek.com/v1",
+    #     model_info={
+    #         "function_calling": True,
+    #         "max_tokens": 4096,
+    #         "context_length": 32768,
+    #         "vision": False,
+    #         "json_output": True,
+    #         "family": "deepseek",
+    #         "structured_output": True,
+    #     }
+    # )
+    
     return OpenAIChatCompletionClient(
-        model=os.getenv("LLM_MODEL_ID", "gpt-4o"),
+        model=model_id,
         api_key=os.getenv("LLM_API_KEY"),
-        base_url=os.getenv("LLM_BASE_URL", "https://api.openai.com/v1")
+        base_url=os.getenv("LLM_BASE_URL", "https://api.openai.com/v1"),
+        model_info=model_info
     )
 
 def create_product_manager(model_client):
@@ -164,12 +192,56 @@ async def run_software_development_team():
     print("=" * 60)
     
     # 使用 Console 来显示对话过程
-    result = await Console(team_chat.run_stream(task=task))
+    stream = team_chat.run_stream(task=task)
+    all_messages = []
+    
+    async for message in stream:
+        # 实时显示消息
+        if hasattr(message, 'source'):
+            print(f"\n[{message.source}]: {message.content}")
+        all_messages.append(message)
     
     print("\n" + "=" * 60)
     print("✅ 团队协作完成！")
     
-    return result
+    # 提取生成的代码
+    extract_and_save_code(all_messages)
+    
+    return all_messages
+
+def extract_and_save_code(messages):
+    """从消息中提取代码并保存到文件"""
+    print("\n📝 正在提取生成的代码...")
+
+    def is_valid_python(code: str) -> bool:
+        try:
+            ast.parse(code)
+            return True
+        except SyntaxError:
+            return False
+
+    code_blocks = []
+    pattern = r"```(?:python)?\n(.*?)```"
+    for msg in messages:
+        content = msg.content if hasattr(msg, 'content') else str(msg)
+        matches = re.findall(pattern, content, re.DOTALL | re.IGNORECASE)
+        code_blocks.extend(matches)
+
+    valid_code = next((code for code in reversed(code_blocks) if is_valid_python(code)), None)
+
+    if valid_code:
+        output_file = "bitcoin_app.py"
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(valid_code.strip() + "\n")
+
+        print(f"✅ 代码已保存到: {output_file}")
+        print(f"📊 共提取 {len(code_blocks)} 个代码块，保存了符合语法的版本")
+        print(f"\n🚀 运行应用: streamlit run {output_file}")
+    else:
+        if code_blocks:
+            print("⚠️  找到代码块但无法通过语法校验，请检查代理输出")
+        else:
+            print("⚠️  未找到代码块")
 
 # 主程序入口
 if __name__ == "__main__":
